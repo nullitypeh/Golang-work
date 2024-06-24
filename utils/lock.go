@@ -1,9 +1,11 @@
 package utils
 
 import (
+	/*
 	"time"
+	*/
 	"github.com/gomodule/redigo/redis"
-	"github.com/yourusername/product-management/config"
+	"Golangxy/config"
 )
 
 func AcquireLock(key string, timeout int) (bool, error) {

@@ -14,7 +14,22 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func CreateItemWithLock(w http.ResponseWriter, r *http.Request) {
+// 获取时区
+func getTimeZone(appLocal string) *time.Location {
+	var loc *time.Location
+	switch appLocal {
+	case "uk":
+		loc, _ = time.LoadLocation("Europe/London")
+	case "jp":
+		loc, _ = time.LoadLocation("Asia/Tokyo")
+	case "ru":
+		loc, _ = time.LoadLocation("Europe/Moscow")
+	default:
+		loc = time.UTC
+	}
+	return loc
+}
+func CreateItemWithLock(w http.ResponseWriter, r *http.Request, localCache *utils.Cache) {
 	var item models.Item
 	if err := json.NewDecoder(r.Body).Decode(&item); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
@@ -33,11 +48,17 @@ func CreateItemWithLock(w http.ResponseWriter, r *http.Request) {
 	}
 	defer utils.ReleaseLock(lockKey)
 
+	// 将创建时间存储为当前时间
+	item.CreatedAt = time.Now()
+
+	// 将信息存入数据库
 	_, err = config.DBEngine.Insert(&item)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+
+	// 获取请求头中的 app_local 字段
 	response := map[string]interface{}{
 		"code": 0,
 		"msg":  "成功",
@@ -48,7 +69,7 @@ func CreateItemWithLock(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(response)
 }
 
-func UpdateItemWithLock(w http.ResponseWriter, r *http.Request) {
+func UpdateItemWithLock(w http.ResponseWriter, r *http.Request, localCache *utils.Cache) {
 	params := mux.Vars(r)
 	id, err := strconv.ParseInt(params["item_id"], 10, 64)
 	if err != nil {
@@ -75,11 +96,15 @@ func UpdateItemWithLock(w http.ResponseWriter, r *http.Request) {
 	}
 	defer utils.ReleaseLock(lockKey)
 
+	// 将更新时间存储为当前时间
+	itemxy.UpdatedAt = time.Now()
+
 	_, err = config.DBEngine.ID(id).Update(&itemxy)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+
 	response := map[string]interface{}{
 		"code": 0,
 		"msg":  "成功",
@@ -165,11 +190,16 @@ func DeleteItem(w http.ResponseWriter, r *http.Request, localCache *utils.Cache)
 	// 从本地缓存删除
 	localCache.Delete(cacheKey)
 
+	// 获取请求头中的 app_local 字段
+	appLocal := r.Header.Get("app_local")
+	loc := getTimeZone(appLocal)
+	deleteTime := time.Now().In(loc).Format("2006-01-02 15:04:05")
+
 	response := map[string]interface{}{
 		"code": 0,
 		"msg":  "成功",
 		"data": map[string]interface{}{
-			"delete_time": time.Now().Format("2006-01-02 15:04:05"),
+			"delete_time": deleteTime,
 		},
 	}
 	json.NewEncoder(w).Encode(response)

@@ -1,0 +1,33 @@
+INFO: 2024/06/26 15:21:44 log_utils.go:19: Logger initialized
+INFO: 2024/06/26 15:31:51 log_utils.go:19: Logger initialized
+INFO: 2024/06/26 15:32:44 item_handler.go:82: Item created successfully
+INFO: 2024/06/26 15:42:03 log_utils.go:19: Logger initialized
+INFO: 2024/06/26 15:42:31 log_utils.go:19: Logger initialized
+INFO: 2024/06/26 15:45:33 item_handler.go:116: Failed to update item: Error 1146 (42S02): Table 'goxy.item' doesn't exist
+INFO: 2024/06/26 15:49:47 log_utils.go:19: Logger initialized
+INFO: 2024/06/26 15:49:59 item_handler.go:76: Item created successfully
+INFO: 2024/06/26 15:50:13 item_handler.go:116: Failed to update item: Error 1054 (42S22): Unknown column 'item_i_d' in 'where clause'
+INFO: 2024/06/26 15:51:46 item_handler.go:35: Panic recovered: Error 1054 (42S22): Unknown column 'item_i_d' in 'field list'
+INFO: 2024/06/26 15:53:00 log_utils.go:19: Logger initialized
+INFO: 2024/06/26 15:54:03 item_handler.go:76: Item created successfully
+INFO: 2024/06/26 15:54:24 item_handler.go:152: Item updated successfully: {1 自行车 1000 0001-01-01 00:00:00 +0000 UTC 2024-06-26 15:54:24.2172127 +0800 CST}
+INFO: 2024/06/26 15:54:48 item_handler.go:203: Item retrieved successfully
+INFO: 2024/06/26 16:01:11 log_utils.go:19: Logger initialized
+INFO: 2024/06/26 16:01:20 item_handler.go:97: Item_id updated successfully: 1
+INFO: 2024/06/26 16:01:20 item_handler.go:152: Item updated successfully: {1 自行车 1000 0001-01-01 00:00:00 +0000 UTC 2024-06-26 16:01:20.8170699 +0800 CST}
+INFO: 2024/06/26 16:04:45 log_utils.go:19: Logger initialized
+INFO: 2024/06/26 16:04:53 item_handler.go:97: id updated successfully: 1
+INFO: 2024/06/26 16:04:53 item_handler.go:98: Item_id updated successfully: 1
+INFO: 2024/06/26 16:04:53 item_handler.go:154: Item updated successfully: {1 自行车 1000 0001-01-01 00:00:00 +0000 UTC 2024-06-26 16:04:53.7912304 +0800 CST}
+INFO: 2024/06/26 16:05:38 log_utils.go:19: Logger initialized
+INFO: 2024/06/26 16:05:43 item_handler.go:97: id updated successfully: 1
+INFO: 2024/06/26 16:05:43 item_handler.go:98: Item_id updated successfully: 1
+INFO: 2024/06/26 16:05:43 item_handler.go:154: Item updated successfully: {1 自行车 1000 0001-01-01 00:00:00 +0000 UTC 2024-06-26 16:05:43.0384136 +0800 CST}
+INFO: 2024/06/26 16:05:56 log_utils.go:19: Logger initialized
+INFO: 2024/06/26 16:06:02 item_handler.go:97: id updated successfully: 1
+INFO: 2024/06/26 16:06:02 item_handler.go:98: Item_id updated successfully: 1
+INFO: 2024/06/26 16:06:02 item_handler.go:154: Item updated successfully: {1 自行车 1000 0001-01-01 00:00:00 +0000 UTC 2024-06-26 16:06:02.2755557 +0800 CST}
+INFO: 2024/06/26 16:06:29 log_utils.go:19: Logger initialized
+INFO: 2024/06/26 16:06:34 item_handler.go:96: id updated successfully: 1
+INFO: 2024/06/26 16:06:34 item_handler.go:97: Item_id updated successfully: 12345
+INFO: 2024/06/26 16:06:34 item_handler.go:153: Item updated successfully: {12345 自行车 1000 0001-01-01 00:00:00 +0000 UTC 2024-06-26 16:06:34.6064282 +0800 CST}

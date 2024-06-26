@@ -5,3 +5,4 @@
 ![{A78014C7-2B18-4a12-BDDE-A1504DAE6FD8}](https://github.com/nullitypeh/Golang-work/assets/159264792/76286858-9c16-4813-bb2b-d17d24813f6a)
 ![{F54F0C46-E240-4b2d-B730-8E8631F76032}](https://github.com/nullitypeh/Golang-work/assets/159264792/8526c06d-8f1d-4e59-b572-32fff8451539)
 ![image](https://github.com/nullitypeh/Golang-work/assets/159264792/d4000e93-c409-429f-83a9-d8b24f10ade8)
+6.26完成了错误组件和日志的添加

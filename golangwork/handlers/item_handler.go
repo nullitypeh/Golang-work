@@ -29,6 +29,8 @@ func getTimeZone(appLocal string) *time.Location {
 	}
 	return loc
 }
+
+// @warn WithLock没必要体现在如此上层的方法名字上
 func CreateItemWithLock(w http.ResponseWriter, r *http.Request, localCache *utils.Cache) {
 	var item models.Item
 	if err := json.NewDecoder(r.Body).Decode(&item); err != nil {
@@ -58,6 +60,7 @@ func CreateItemWithLock(w http.ResponseWriter, r *http.Request, localCache *util
 		return
 	}
 
+	// @warn 缺少错误组件封装
 	// 获取请求头中的 app_local 字段
 	response := map[string]interface{}{
 		"code": 0,
@@ -99,6 +102,7 @@ func UpdateItemWithLock(w http.ResponseWriter, r *http.Request, localCache *util
 	// 将更新时间存储为当前时间
 	itemxy.UpdatedAt = time.Now()
 
+	// @warn 最好抽象单独的数据处理层
 	_, err = config.DBEngine.ID(id).Update(&itemxy)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -129,6 +133,7 @@ func GetItemWithCache(w http.ResponseWriter, r *http.Request, localCache *utils.
 	// 检查本地缓存
 	if cachedItem, found := localCache.Get(cacheKey); found {
 		item = cachedItem.(models.Item)
+		//@warn 提前结束而不是else，可以增加接口可读性
 	} else {
 		// 检查 Redis 缓存
 		conn := config.RedisPool.Get()
@@ -148,6 +153,7 @@ func GetItemWithCache(w http.ResponseWriter, r *http.Request, localCache *utils.
 				return
 			}
 			// 更新 Redis 缓存
+			// @warn 丢弃 error不是一个好的例子
 			data, _ := json.Marshal(item)
 			conn.Do("SET", cacheKey, data)
 		}
